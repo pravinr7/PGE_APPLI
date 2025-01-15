@@ -230,8 +230,33 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
-      child: Text('Carte interactive avec les positions des brebis.'),
+    return Scaffold(
+      body: FlutterMap(
+        options: MapOptions(
+          center: LatLng(43.6047, 1.4442), // Toulouse
+          zoom: 13.0,
+        ),
+        children: [
+          TileLayer(
+            urlTemplate: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+            subdomains: ['a', 'b', 'c'],
+          ),
+          MarkerLayer(
+            markers: [
+              Marker(
+                width: 80.0,
+                height: 80.0,
+                point: LatLng(43.6047, 1.4442), // Position de Toulouse
+                builder: (ctx) => const Icon(
+                  Icons.location_on,
+                  color: Colors.red,
+                  size: 40,
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }
